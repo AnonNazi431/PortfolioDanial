@@ -40,39 +40,39 @@
     // Certifications Data Layer
     const certs = [
       {
-        name: "OSCP - Offensive Security Certified Professional",
+        name: "Google Cybersecurity Professional Certificate",
         icon: "fa-shield-alt",
-        desc: "Advanced penetration testing certification demonstrating expertise in identifying and exploiting vulnerabilities in real-world scenarios.",
+        desc: "Comprehensive program covering cybersecurity fundamentals, network security, incident response, and security operations through hands-on projects and real-world scenarios.",
         link: "#"
       },
       {
-        name: "CEH - Certified Ethical Hacker",
+        name: "Cisco Ethical Hacking",
         icon: "fa-user-secret",
-        desc: "Comprehensive certification covering ethical hacking methodologies, tools, and techniques for securing systems and networks.",
+        desc: "Professional certification focusing on ethical hacking techniques, vulnerability assessment, and penetration testing methodologies for securing Cisco networks and systems.",
         link: "#"
       },
       {
-        name: "CompTIA Security+",
+        name: "Cisco JR Pentester",
         icon: "fa-lock",
-        desc: "Foundational cybersecurity certification validating skills in network security, compliance, and operational security.",
+        desc: "Junior-level penetration testing certification providing foundational skills in ethical hacking, vulnerability discovery, and basic penetration testing techniques.",
         link: "#"
       },
       {
-        name: "CISSP - Certified Information Systems Security Professional",
+        name: "Python Development",
         icon: "fa-certificate",
-        desc: "Global standard for information security management, covering security and risk management, asset security, and more.",
+        desc: "Programming certification demonstrating proficiency in Python development, including scripting, automation, data analysis, and application development.",
         link: "#"
       },
       {
-        name: "GIAC Penetration Tester (GPEN)",
+        name: "CC Certified in Cybersecurity",
         icon: "fa-bug",
-        desc: "Advanced certification focusing on penetration testing techniques, tools, and methodologies for comprehensive security assessments.",
+        desc: "Entry-level cybersecurity certification covering basic security concepts, network security fundamentals, and compliance requirements for IT professionals.",
         link: "#"
       },
       {
-        name: "eJPT - eLearnSecurity Junior Penetration Tester",
+        name: "Fortinet Certified Associate",
         icon: "fa-code",
-        desc: "Entry-level certification providing foundational knowledge in penetration testing and ethical hacking practices.",
+        desc: "Associate-level certification validating knowledge of Fortinet security products, network security concepts, and basic firewall configuration and management.",
         link: "#"
       }
     ];
