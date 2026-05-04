@@ -163,6 +163,100 @@
       gap: 2rem;
     }
 
+    /* Connect Layout */
+    .connect-container {
+      padding: 100px 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+    }
+
+    /* Terminal Style */
+    .terminal {
+      background: var(--surface);
+      border: 1px solid var(--accent-dim);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 800px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -10px var(--accent-dim);
+    }
+
+    .terminal-header {
+      background: var(--bg);
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid var(--accent-dim);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .terminal-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .terminal-buttons span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .red { background: #ff5f57; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #28ca42; }
+
+    .terminal-body {
+      padding: 2rem;
+      font-family: 'Fira Code', monospace;
+      color: var(--text-main);
+      line-height: 1.6;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .terminal-body p {
+      margin: 0.5rem 0;
+    }
+
+    .cursor {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .terminal-commands {
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--accent-dim);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .terminal-btn {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.4rem 0.8rem;
+      font-family: 'Fira Code', monospace;
+      text-decoration: none;
+      font-size: 0.7rem;
+      transition: 0.3s;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .terminal-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--accent-dim);

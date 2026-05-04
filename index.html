@@ -80,7 +80,7 @@
 
   </div>
 
-  <div class="grid-container" id="connect">
+  <div class="connect-container" id="connect">
 
   </div>
 
@@ -225,15 +225,92 @@
 
     // Dynamic Loading for Connect
     const connectGrid = document.getElementById('connect');
-    connects.forEach(c => {
-      connectGrid.innerHTML += `
-                <div class="card">
-                    <i class="fa-solid ${c.icon}"></i>
-                    <h3>${c.name}</h3>
-                    <p>${c.desc}</p>
-                    <a href="${c.link}" target="_blank" class="btn">${c.name === 'Resume PDF' ? 'DOWNLOAD' : 'CONNECT'}</a>
-                </div>
-            `;
+    connectGrid.innerHTML = `
+      <div class="terminal">
+        <div class="terminal-header">
+          <span class="mono">CONNECT_TERMINAL.exe</span>
+          <div class="terminal-buttons">
+            <span class="red"></span>
+            <span class="yellow"></span>
+            <span class="green"></span>
+          </div>
+        </div>
+        <div class="terminal-body" id="terminal-output">
+          <p class="mono">Welcome to CONNECT_TERMINAL v2.1.0</p>
+          <p class="mono">Type 'help' or click commands below to get contact information.</p>
+          <p class="mono">$ <span class="cursor">_</span></p>
+        </div>
+        <div class="terminal-commands">
+          <button class="terminal-btn" data-command="email">EMAIL</button>
+          <button class="terminal-btn" data-command="location">LOCATION</button>
+          <button class="terminal-btn" data-command="github">GITHUB</button>
+          <button class="terminal-btn" data-command="linkedin">LINKEDIN</button>
+          <button class="terminal-btn" data-command="whatsapp">WHATSAPP</button>
+          <button class="terminal-btn" data-command="resume">RESUME</button>
+          <button class="terminal-btn" data-command="clear">CLEAR</button>
+        </div>
+      </div>
+    `;
+
+    // Interactive Terminal Logic
+    const terminalOutput = document.getElementById('terminal-output');
+    const commandButtons = document.querySelectorAll('.terminal-btn[data-command]');
+
+    const contactData = {
+      email: 'wan.danial.aiman@gmail.com',
+      location: 'Kuala Lumpur, Malaysia',
+      github: 'https://github.com/AnonNazi431',
+      linkedin: 'https://linkedin.com/in/wan-danial-aiman',
+      whatsapp: 'https://wa.me/60176877807',
+      resume: '#'
+    };
+
+    function executeCommand(command) {
+      const output = terminalOutput;
+      const lastLine = output.lastElementChild;
+      
+      if (command === 'clear') {
+        output.innerHTML = `
+          <p class="mono">Terminal cleared.</p>
+          <p class="mono">$ <span class="cursor">_</span></p>
+        `;
+        return;
+      }
+
+      if (contactData[command]) {
+        // Remove cursor from last line
+        if (lastLine && lastLine.textContent.includes('$')) {
+          lastLine.innerHTML = '$ ' + command;
+        }
+        
+        // Add output
+        const outputLine = document.createElement('p');
+        outputLine.className = 'mono';
+        if (command === 'email') {
+          outputLine.innerHTML = contactData[command];
+        } else if (command === 'location') {
+          outputLine.innerHTML = contactData[command];
+        } else {
+          outputLine.innerHTML = `<a href="${contactData[command]}" target="_blank" style="color: var(--accent); text-decoration: none;">${contactData[command]}</a>`;
+        }
+        output.appendChild(outputLine);
+        
+        // Add new prompt
+        const newPrompt = document.createElement('p');
+        newPrompt.className = 'mono';
+        newPrompt.innerHTML = '$ <span class="cursor">_</span>';
+        output.appendChild(newPrompt);
+        
+        // Scroll to bottom
+        output.scrollTop = output.scrollHeight;
+      }
+    }
+
+    commandButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const command = btn.getAttribute('data-command');
+        executeCommand(command);
+      });
     });
     // Typewriter Effect
     const text = ["Ethical Hacker", "Pentester", "System Security Expert", "Cybersecurity Specialist", "Data Analyst"];
