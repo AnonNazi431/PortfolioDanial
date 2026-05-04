@@ -80,40 +80,65 @@
     // Dynamic Loading for Certifications
     const certGrid = document.getElementById('cert');
     certGrid.innerHTML = `
-      <div class="security-database">
-        <div class="database-header">
-          <div class="mono">SECURITY_CLEARANCE_DATABASE.exe</div>
-          <div class="status-indicator">
-            <span class="pulse-small"></span>
-            <span class="mono">STATUS: AUTHORIZED</span>
+      <section class="cert-panel">
+        <div class="cert-panel-header">
+          <div>
+            <div class="mono">CERTIFICATION VAULT</div>
+            <p>Verified credentials displayed all from various providers</p>
+          </div>
+          <div class="cert-panel-meta">
+            <span class="cert-meta-item">${certs.length} Certificates</span>
+            <span class="cert-meta-item">Secure, verified, and theme aligned</span>
           </div>
         </div>
-        <div class="database-content">
-          <div class="cert-header">
-            <span class="mono cert-col">CERTIFICATION</span>
-            <span class="mono cert-col">LEVEL</span>
-            <span class="mono cert-col">VALIDATION</span>
-          </div>
+        <div class="cert-filter-row">
+          <button class="cert-filter-btn active" data-filter="all">ALL</button>
+          <button class="cert-filter-btn" data-filter="PRO">PRO</button>
+          <button class="cert-filter-btn" data-filter="INT">INT</button>
+          <button class="cert-filter-btn" data-filter="BASIC">BASIC</button>
+        </div>
+        <div class="cert-list" id="cert-list">
           ${certs.map((c, index) => `
-            <div class="cert-entry" data-index="${index}">
-              <div class="cert-info">
-                <i class="fa-solid ${c.icon}"></i>
-                <div class="cert-details">
-                  <div class="cert-name mono">${c.name}</div>
-                  <div class="cert-desc">${c.desc}</div>
-                </div>
+            <article class="cert-card" data-level="${getLevel(c.name)}">
+              <div class="cert-card-top">
+                <div class="cert-badge ${getLevelClass(c.name)}">${getLevel(c.name)}</div>
+                <div class="cert-icon"><i class="fa-solid ${c.icon}"></i></div>
               </div>
-              <div class="cert-level">
-                <span class="level-badge ${getLevelClass(c.name)}">${getLevel(c.name)}</span>
-              </div>
-              <div class="cert-action">
+              <h3 class="cert-card-title mono">${c.name}</h3>
+              <p class="cert-card-desc">${c.desc}</p>
+              <div class="cert-card-footer">
                 <button class="verify-btn mono" onclick="verifyCert(${index})">VERIFY</button>
               </div>
-            </div>
+            </article>
           `).join('')}
         </div>
-      </div>
+      </section>
     `;
+
+    const certList = document.getElementById('cert-list');
+    const filterButtons = document.querySelectorAll('.cert-filter-btn');
+
+    function filterCerts(level) {
+      filterButtons.forEach(button => {
+        button.classList.toggle('active', button.getAttribute('data-filter') === level);
+      });
+
+      const cards = certList.querySelectorAll('.cert-card');
+      cards.forEach(card => {
+        const cardLevel = card.getAttribute('data-level');
+        if (level === 'all' || cardLevel === level) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => filterCerts(button.getAttribute('data-filter')));
+    });
+
+    filterCerts('all');
 
     function getLevel(certName) {
       if (certName.includes('Professional') || certName.includes('Ethical Hacking')) return 'PRO';
@@ -122,30 +147,30 @@
     }
 
     function getLevelClass(certName) {
-      const level = getLevel(certName);
-      return level.toLowerCase();
+      return getLevel(certName).toLowerCase();
     }
 
     // Make verifyCert function global
     window.verifyCert = function(index) {
-      const cert = certs[index];
-      const entry = document.querySelector(`.cert-entry[data-index="${index}"]`);
-      const btn = entry.querySelector('.verify-btn');
-      
+      const card = document.querySelector(`.cert-card[data-index="${index}"]`);
+      const btn = card.querySelector('.verify-btn');
+
       btn.textContent = 'VERIFYING...';
       btn.style.background = 'var(--accent)';
-      
+      btn.disabled = true;
+
       setTimeout(() => {
         btn.textContent = 'VERIFIED ✓';
         btn.style.background = '#22c55e';
-        entry.style.borderColor = '#22c55e';
-        
+        card.style.borderColor = '#22c55e';
+
         setTimeout(() => {
           btn.textContent = 'VERIFY';
           btn.style.background = 'var(--accent)';
-          entry.style.borderColor = 'var(--accent-dim)';
-        }, 3000);
-      }, 1500);
+          btn.disabled = false;
+          card.style.borderColor = 'var(--accent-dim)';
+        }, 2500);
+      }, 1200);
     };
 
     // Connect Data Layer
@@ -191,7 +216,7 @@
     // Dynamic Loading for Connect
     const connectGrid = document.getElementById('connect');
     connectGrid.innerHTML = `
-      <div class="terminal">
+      <div class="terminal connect-terminal">
         <div class="terminal-header">
           <span class="mono">CONNECT_TERMINAL.exe</span>
           <div class="terminal-buttons">
@@ -218,8 +243,8 @@
     `;
 
     // Interactive Terminal Logic
-    const terminalOutput = document.getElementById('terminal-output');
-    const commandButtons = document.querySelectorAll('.terminal-btn[data-command]');
+    const terminalOutput = document.querySelector('.connect-terminal #terminal-output');
+    const commandButtons = document.querySelectorAll('.connect-terminal .terminal-btn[data-command]');
 
     const contactData = {
       email: 'wan.danial.aiman@gmail.com',
