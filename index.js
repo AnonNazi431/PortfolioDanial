@@ -79,16 +79,74 @@
 
     // Dynamic Loading for Certifications
     const certGrid = document.getElementById('cert');
-    certs.forEach(c => {
-      certGrid.innerHTML += `
-                <div class="card">
-                    <i class="fa-solid ${c.icon}"></i>
-                    <h3>${c.name}</h3>
-                    <p>${c.desc}</p>
-                    <a href="${c.link}" target="_blank" class="btn">VERIFY_CERT</a>
+    certGrid.innerHTML = `
+      <div class="security-database">
+        <div class="database-header">
+          <div class="mono">SECURITY_CLEARANCE_DATABASE.exe</div>
+          <div class="status-indicator">
+            <span class="pulse-small"></span>
+            <span class="mono">STATUS: AUTHORIZED</span>
+          </div>
+        </div>
+        <div class="database-content">
+          <div class="cert-header">
+            <span class="mono cert-col">CERTIFICATION</span>
+            <span class="mono cert-col">LEVEL</span>
+            <span class="mono cert-col">VALIDATION</span>
+          </div>
+          ${certs.map((c, index) => `
+            <div class="cert-entry" data-index="${index}">
+              <div class="cert-info">
+                <i class="fa-solid ${c.icon}"></i>
+                <div class="cert-details">
+                  <div class="cert-name mono">${c.name}</div>
+                  <div class="cert-desc">${c.desc}</div>
                 </div>
-            `;
-    });
+              </div>
+              <div class="cert-level">
+                <span class="level-badge ${getLevelClass(c.name)}">${getLevel(c.name)}</span>
+              </div>
+              <div class="cert-action">
+                <button class="verify-btn mono" onclick="verifyCert(${index})">VERIFY</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    function getLevel(certName) {
+      if (certName.includes('Professional') || certName.includes('Ethical Hacking')) return 'PRO';
+      if (certName.includes('JR') || certName.includes('Associate') || certName.includes('Certified in Cybersecurity')) return 'INT';
+      return 'BASIC';
+    }
+
+    function getLevelClass(certName) {
+      const level = getLevel(certName);
+      return level.toLowerCase();
+    }
+
+    // Make verifyCert function global
+    window.verifyCert = function(index) {
+      const cert = certs[index];
+      const entry = document.querySelector(`.cert-entry[data-index="${index}"]`);
+      const btn = entry.querySelector('.verify-btn');
+      
+      btn.textContent = 'VERIFYING...';
+      btn.style.background = 'var(--accent)';
+      
+      setTimeout(() => {
+        btn.textContent = 'VERIFIED ✓';
+        btn.style.background = '#22c55e';
+        entry.style.borderColor = '#22c55e';
+        
+        setTimeout(() => {
+          btn.textContent = 'VERIFY';
+          btn.style.background = 'var(--accent)';
+          entry.style.borderColor = 'var(--accent-dim)';
+        }, 3000);
+      }, 1500);
+    };
 
     // Connect Data Layer
     const connects = [
